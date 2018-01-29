@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NuGet;
 
-namespace NugetGraph
+namespace NuGetGraph
 {
     public static class NuGetGraphUtils
     {

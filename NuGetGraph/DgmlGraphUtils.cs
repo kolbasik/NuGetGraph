@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NugetGraph
+namespace NuGetGraph
 {
     public static class DgmlGraphUtils
     {

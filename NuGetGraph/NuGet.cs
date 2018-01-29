@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using NuGet;
 
-namespace NugetGraph
+namespace NuGetGraph
 {
     /// <summary>
     /// https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy

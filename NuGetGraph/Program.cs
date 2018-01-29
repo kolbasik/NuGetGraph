@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Linq;
 
-namespace NugetGraph
+namespace NuGetGraph
 {
     public static class Program
     {
