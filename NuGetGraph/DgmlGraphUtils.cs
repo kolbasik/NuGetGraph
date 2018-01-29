@@ -15,7 +15,7 @@ namespace NugetGraph
             {
                 dgmlGraph.Nodes.Add(new Dgml.Node(project.Id, "project"));
                 dgmlGraph.Links.Add(new Dgml.Link(solution.Id, project.Id));
-                var tuples = project.Descendants.Select(desc => Tuple.Create<NuGet.Node, NuGet.Node>(project, desc)).ToList();
+                var tuples = project.Descendants.Select(desc => Tuple.Create(project, desc)).ToList();
                 while (tuples.Count > 0)
                 {
                     var temp = new List<Tuple<NuGet.Node, NuGet.Node>>();

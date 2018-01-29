@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Dgml.cs" />
     <Compile Include="DgmlGraphUtils.cs" />
+    <Compile Include="DotNetCore.cs" />
     <Compile Include="NuGet.cs" />
     <Compile Include="NuGetGraphUtils.cs" />
     <Compile Include="Program.cs" />

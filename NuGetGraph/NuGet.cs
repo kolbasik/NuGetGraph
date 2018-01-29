@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using NuGet;
 
 namespace NugetGraph
@@ -25,25 +24,67 @@ namespace NugetGraph
             public List<string> ExcludeLibraries { get; } = new List<string>();
             public bool ExcludeMicrosoftLibraries { get; set; }
             public bool UseNamespaces { get; set; }
+            public bool UseVersions { get; set; }
         }
 
         public static Graph GetGraph(GraphOptions options)
         {
             var index = 0;
             var graph = new Graph();
-            var sharedPackageRepository = new SharedPackageRepository(Path.Combine(options.Path, "packages"));
-            foreach (var config in Directory.GetFiles(options.Path, "packages.config", SearchOption.AllDirectories).Where(x => !options.ExcludeConfigs.Any(e => x.ToUpperInvariant().Contains(e))))
+            var configs = GetConfigs().Where(x => !options.ExcludeConfigs.Any(e => x.Item1.ToUpperInvariant().Contains(e)));
+            foreach (var grouping in configs.GroupBy(x => x.Item2))
             {
-                var ns = options.UseNamespaces ? ++index + ":" : null;
-                var node = graph.GetOrAdd(ns + Path.GetFileName(Path.GetDirectoryName(config)));
-                if (graph.Root.Append(node))
+                switch (grouping.Key)
                 {
-                    var projectPackageRepository = new PackageReferenceRepository(config, sharedPackageRepository);
-                    var packages = projectPackageRepository.GetPackages();
-                    Walk(projectPackageRepository, packages, node, ns);
+                    case "packages":
+                        {
+                            var sharedPackageRepository = new SharedPackageRepository(Path.Combine(options.Path, "packages"));
+                            Scan(grouping, path => new PackageReferenceRepository(path, sharedPackageRepository));
+                            break;
+                        }
+                    case "projects":
+                        {
+                            var userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                            var sharedPackageRepository = new DotNetCore.SharedPackageRepository(Path.Combine(userProfilePath, @".nuget\packages"));
+                            Scan(grouping, path => new DotNetCore.PackageReferenceRepository(path, sharedPackageRepository));
+                            break;
+                        }
                 }
             }
             return graph;
+
+            IEnumerable<Tuple<string, string, string>> GetConfigs()
+            {
+                foreach (var project in Directory.GetFiles(options.Path, "*proj", SearchOption.AllDirectories))
+                {
+                    var directory = Path.GetDirectoryName(project);
+                    var directoryName = Path.GetFileName(directory);
+                    var config = Path.Combine(directory, "packages.config");
+                    if (File.Exists(config))
+                    {
+                        yield return Tuple.Create(directoryName, "packages", config);
+                    }
+                    else
+                    {
+                        yield return Tuple.Create(directoryName, "projects", project);
+                    }
+                }
+            }
+
+            void Scan(IEnumerable<Tuple<string, string, string>> grouping, Func<string, IPackageLookup> resolve)
+            {
+                foreach (var config in grouping)
+                {
+                    var ns = options.UseNamespaces ? ++index + ":" : null;
+                    var node = graph.GetOrAdd(ns + config.Item1);
+                    if (graph.Root.Append(node))
+                    {
+                        var packageRepository = resolve(config.Item3);
+                        var packages = packageRepository.GetPackages();
+                        Walk(packageRepository, packages, node, ns);
+                    }
+                }
+            }
 
             void Walk(IPackageRepository packageRepository, IEnumerable<IPackage> packages, Node root, string ns)
             {
@@ -53,7 +94,7 @@ namespace NugetGraph
                     {
                         continue;
                     }
-                    var node = graph.GetOrAdd(ns + package.Id);
+                    var node = graph.GetOrAdd(ns + package.Id + (options.UseVersions ? ":" + package.Version : null));
                     if (root.Append(node))
                     {
                         var dependentPackages = new List<IPackage>();
@@ -71,14 +112,14 @@ namespace NugetGraph
             }
         }
 
-
         public sealed class Graph
         {
+            private readonly ConcurrentDictionary<string, Node> nodes = new ConcurrentDictionary<string, Node>();
+
             public Node Root { get; } = new Node("ROOT");
-            private ConcurrentDictionary<string, Node> Nodes { get; } = new ConcurrentDictionary<string, Node>();
-            public IEnumerable<Node> GetNodes() => Nodes.Values;
-            public Node GetOrAdd(string id) => Nodes.GetOrAdd(id, x => new Node(x));
-            public override string ToString() => $"Graph:{Nodes.Count}";
+            public IEnumerable<Node> GetNodes() => nodes.Values;
+            public Node GetOrAdd(string id) => nodes.GetOrAdd(id, x => new Node(x));
+            public override string ToString() => $"Graph:{nodes.Count}";
         }
 
         public sealed class Node : IEquatable<Node>
@@ -94,8 +135,7 @@ namespace NugetGraph
 
             public bool Append(Node node)
             {
-                node.Ancestors.Add(this);
-                return Descendants.Add(node);
+                return Descendants.Add(node) && node.Ancestors.Add(this);
             }
 
             public override string ToString()

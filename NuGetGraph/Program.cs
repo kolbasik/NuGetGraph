@@ -61,6 +61,7 @@ namespace NugetGraph
                     Graph =
                     {
                         UseNamespaces = false,
+                        UseVersions = true,
                         Simplify = true,
                         UseStyles = true,
                         UseFormatting = false,
@@ -85,7 +86,8 @@ namespace NugetGraph
                 var options = new NuGet.GraphOptions(Input.Path)
                 {
                     ExcludeMicrosoftLibraries = Input.ExcludeMicrosoftLibraries,
-                    UseNamespaces = Graph.UseNamespaces
+                    UseNamespaces = Graph.UseNamespaces,
+                    UseVersions = Graph.UseVersions
                 };
                 options.ExcludeConfigs.AddRange(Input.ExcludeConfigs);
                 options.ExcludeLibraries.AddRange(Input.ExcludeLibraries);
@@ -108,6 +110,7 @@ namespace NugetGraph
             public sealed class GraphOptions
             {
                 public bool UseNamespaces { get; set; }
+                public bool UseVersions { get; set; }
                 public bool Simplify { get; set; }
                 public bool UseStyles { get; set; }
                 public bool UseFormatting { get; set; }

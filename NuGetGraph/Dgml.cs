@@ -111,7 +111,7 @@ namespace NugetGraph
             public string Source { get; }
             public string Target { get; }
 
-            public override string ToString() => $"{Source} -> {Target}";
+            public override string ToString() => $"{Source} links to {Target}";
         }
 
         public sealed class Style
@@ -147,8 +147,8 @@ namespace NugetGraph
         {
             public StyleSetter(string property, string value)
             {
-                Property = property;
-                Value = value;
+                Property = property ?? throw new ArgumentNullException(nameof(property));
+                Value = value ?? throw new ArgumentNullException(nameof(value));
             }
 
             public string Property { get; }
