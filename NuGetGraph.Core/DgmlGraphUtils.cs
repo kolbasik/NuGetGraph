@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NuGetGraph
+namespace NuGetGraph.Core
 {
     public static class DgmlGraphUtils
     {
-        public static Dgml.Graph ToDgmlGraph(this NuGet.Graph nugetGraph)
+        public static Dgml.Graph ToDgmlGraph(this NuGets.Graph nugetGraph)
         {
             var dgmlGraph = new Dgml.Graph();
             var solution = new Dgml.Node("Solution", "solution");
@@ -18,7 +18,7 @@ namespace NuGetGraph
                 var tuples = project.Descendants.Select(desc => Tuple.Create(project, desc)).ToList();
                 while (tuples.Count > 0)
                 {
-                    var temp = new List<Tuple<NuGet.Node, NuGet.Node>>();
+                    var temp = new List<Tuple<NuGets.Node, NuGets.Node>>();
                     foreach (var tuple in tuples)
                     {
                         var level1 = tuple.Item1;

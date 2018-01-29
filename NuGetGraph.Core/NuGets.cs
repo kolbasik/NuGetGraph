@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using NuGet;
 
-namespace NuGetGraph
+namespace NuGetGraph.Core
 {
     /// <summary>
     /// https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy
     /// </summary>
-    public static class NuGet
+    public static class NuGets
     {
         public sealed class GraphOptions
         {

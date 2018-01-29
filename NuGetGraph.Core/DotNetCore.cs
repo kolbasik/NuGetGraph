@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using NuGet;
 
-namespace NuGetGraph
+namespace NuGetGraph.Core
 {
     public static class DotNetCore
     {

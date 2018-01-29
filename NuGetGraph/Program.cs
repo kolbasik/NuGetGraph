@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
+using NuGetGraph.Core;
 
 namespace NuGetGraph
 {
     public static class Program
     {
-        private static void Main()
+        private static void Main(params string[] args)
         {
             var cli = Options.Default(o =>
             {
-                o.Input.Path = @"c:\code\src\";
+                o.Input.Path = args.ElementAtOrDefault(0) ?? ".";
                 o.Input.ExcludeConfigs.Add(".TEST");
-                o.Graph.UseNamespaces = false;
-                o.Graph.Simplify = true;
                 o.Output.Type = Options.OutputTypes.File;
                 o.Output.OpenFile = true;
             });
 
-            var nugetGraph = NuGet.GetGraph(cli.ToNuGetGraphOptions());
+            var nugetGraph = NuGets.GetGraph(cli.ToNuGetGraphOptions());
             if (cli.Graph.Simplify)
             {
                 nugetGraph.Simplify();
@@ -81,9 +81,9 @@ namespace NuGetGraph
             public GraphOptions Graph { get; } = new GraphOptions();
             public OutputOptions Output { get; } = new OutputOptions();
 
-            public NuGet.GraphOptions ToNuGetGraphOptions()
+            public NuGets.GraphOptions ToNuGetGraphOptions()
             {
-                var options = new NuGet.GraphOptions(Input.Path)
+                var options = new NuGets.GraphOptions(Input.Path)
                 {
                     ExcludeMicrosoftLibraries = Input.ExcludeMicrosoftLibraries,
                     UseNamespaces = Graph.UseNamespaces,
