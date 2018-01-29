@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph", "NuGetGraph\NuGetGraph.csproj", "{ABAC0DFE-1755-48AF-86E2-C3D40DE8E557}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph.CLI", "NuGetGraph.CLI\NuGetGraph.CLI.csproj", "{ABAC0DFE-1755-48AF-86E2-C3D40DE8E557}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph.Core", "NuGetGraph.Core\NuGetGraph.Core.csproj", "{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}"
 EndProject

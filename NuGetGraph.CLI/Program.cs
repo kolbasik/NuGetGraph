@@ -6,7 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using NuGetGraph.Core;
 
-namespace NuGetGraph
+namespace NuGetGraph.CLI
 {
     public static class Program
     {
