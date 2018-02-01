@@ -1,5 +1,13 @@
 # NuGet Graph
 
+Alternative Tools:
+* https://github.com/brentkrueger/VisualStudio2015PackageVisualizer
+
+Useful links:
+* https://github.com/NuGet/Home
+* https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy
+* https://docs.microsoft.com/en-us/visualstudio/modeling/customize-code-maps-by-editing-the-dgml-files
+
 ## Command line interface
 
 The `console` help:
