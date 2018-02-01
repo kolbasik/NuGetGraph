@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace NuGetGraph.Core
+namespace NuGetGraph.Components
 {
     /// <summary>
     /// https://docs.microsoft.com/en-us/visualstudio/modeling/customize-code-maps-by-editing-the-dgml-files
     /// </summary>
     public static class Dgml
     {
-        public static string ToDgml(this Graph graph, SaveOptions options = SaveOptions.None)
+        public static string ToString(this Graph graph, SaveOptions options = SaveOptions.None)
         {
             XNamespace dgml = "http://schemas.microsoft.com/vs/2009/dgml";
             var xNodes = new XElement(dgml + "Nodes");

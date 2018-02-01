@@ -5,16 +5,16 @@ using System.IO;
 using System.Linq;
 using NuGet;
 
-namespace NuGetGraph.Core
+namespace NuGetGraph.Components
 {
     /// <summary>
     /// https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy
     /// </summary>
-    public static class NuGets
+    public static class NuGetGraph
     {
-        public sealed class GraphOptions
+        public sealed class Options
         {
-            public GraphOptions(string path)
+            public Options(string path)
             {
                 Path = path;
             }
@@ -27,7 +27,7 @@ namespace NuGetGraph.Core
             public bool UseVersions { get; set; }
         }
 
-        public static Graph GetGraph(GraphOptions options)
+        public static Graph Build(Options options)
         {
             var index = 0;
             var graph = new Graph();
@@ -57,7 +57,7 @@ namespace NuGetGraph.Core
             {
                 foreach (var project in Directory.GetFiles(options.Path, "*proj", SearchOption.AllDirectories))
                 {
-                    var directory = Path.GetDirectoryName(project);
+                    var directory = Path.GetDirectoryName(project) ?? throw new InvalidOperationException(project);
                     var directoryName = Path.GetFileName(directory);
                     var config = Path.Combine(directory, "packages.config");
                     if (File.Exists(config))

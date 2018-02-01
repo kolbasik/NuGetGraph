@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using NuGet;
 
-namespace NuGetGraph.Core
+namespace NuGetGraph.Components
 {
     public static class DotNetCore
     {

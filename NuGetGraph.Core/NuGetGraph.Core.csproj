@@ -7,7 +7,7 @@
     <ProjectGuid>{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGetGraph.Core</RootNamespace>
+    <RootNamespace>NuGetGraph</RootNamespace>
     <AssemblyName>NuGetGraph.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dgml.cs" />
-    <Compile Include="DgmlGraphUtils.cs" />
-    <Compile Include="DotNetCore.cs" />
-    <Compile Include="NuGets.cs" />
-    <Compile Include="NuGetGraphUtils.cs" />
+    <Compile Include="Components\Dgml.cs" />
+    <Compile Include="Components\DgmlGraphUtils.cs" />
+    <Compile Include="Components\DotNetCore.cs" />
+    <Compile Include="Components\NuGetGraph.cs" />
+    <Compile Include="Components\NuGetGraphUtils.cs" />
+    <Compile Include="NuGetGraphProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
