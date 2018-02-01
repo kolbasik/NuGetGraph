@@ -18,7 +18,9 @@ namespace NuGetGraph
                     Input =
                     {
                         Path = ".",
-                        ExcludeMicrosoftLibraries = true
+                        ExcludeSystemLibraries = true,
+                        ExcludeStandardLibraries = true,
+                        ExcludeMicrosoftLibraries = false
                     },
                     Graph =
                     {
@@ -47,6 +49,8 @@ namespace NuGetGraph
             {
                 var options = new Components.NuGetGraph.Options(Input.Path)
                 {
+                    ExcludeSystemLibraries = Input.ExcludeSystemLibraries,
+                    ExcludeStandardLibraries = Input.ExcludeStandardLibraries,
                     ExcludeMicrosoftLibraries = Input.ExcludeMicrosoftLibraries,
                     UseNamespaces = Graph.UseNamespaces,
                     UseVersions = Graph.UseVersions
@@ -66,6 +70,8 @@ namespace NuGetGraph
                 public string Path { get; set; }
                 public List<string> ExcludeConfigs { get; } = new List<string>();
                 public List<string> ExcludeLibraries { get; } = new List<string>();
+                public bool ExcludeSystemLibraries { get; set; }
+                public bool ExcludeStandardLibraries { get; set; }
                 public bool ExcludeMicrosoftLibraries { get; set; }
             }
 

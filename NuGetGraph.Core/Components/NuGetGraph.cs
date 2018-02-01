@@ -22,6 +22,8 @@ namespace NuGetGraph.Components
             public string Path { get; }
             public List<string> ExcludeConfigs { get; } = new List<string>();
             public List<string> ExcludeLibraries { get; } = new List<string>();
+            public bool ExcludeSystemLibraries { get; set; }
+            public bool ExcludeStandardLibraries { get; set; }
             public bool ExcludeMicrosoftLibraries { get; set; }
             public bool UseNamespaces { get; set; }
             public bool UseVersions { get; set; }
@@ -90,7 +92,15 @@ namespace NuGetGraph.Components
             {
                 foreach (IPackage package in packages.Where(x => !options.ExcludeLibraries.Any(e => x.Id.ToUpperInvariant().Contains(e))))
                 {
-                    if (options.ExcludeMicrosoftLibraries && (package.Id.StartsWith("Microsoft.") || package.Id.StartsWith("System.") || package.Id.StartsWith("NETStandard.")))
+                    if (options.ExcludeSystemLibraries && package.Id.StartsWith("System."))
+                    {
+                        continue;
+                    }
+                    if (options.ExcludeStandardLibraries && package.Id.StartsWith("NETStandard."))
+                    {
+                        continue;
+                    }
+                    if (options.ExcludeMicrosoftLibraries && package.Id.StartsWith("Microsoft."))
                     {
                         continue;
                     }
