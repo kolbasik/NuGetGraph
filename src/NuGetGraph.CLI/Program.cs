@@ -42,7 +42,7 @@ namespace NuGetGraph.CLI
 
                 var source = command.Argument("[path]", "source path");
                 var excludeConfigs = command.Option("-ec|--exclude-configs", "exclude configs e.g. '.Test'", CommandOptionType.MultipleValue);
-                var excludeLibraries = command.Option("-el|--exclude-libraries", "exclude libraries e.g. '.Json'", CommandOptionType.MultipleValue);
+                var excludeLibraries = command.Option("-el|--exclude-libraries", "exclude libraries e.g. 'log4net'", CommandOptionType.MultipleValue);
                 var includeLibraries = command.Option("-il|--include-libraries", "include libraries e.g. system, standard, microsoft.", CommandOptionType.MultipleValue);
 
                 var useNamespaces = command.Option("-un|--use-namespaces", "to separate libraries per projects", CommandOptionType.NoValue);
