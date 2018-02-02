@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="NuGetGraph.VisualStudio.41260d31-9b49-41cd-bf70-3c0099329555" Version="1.0" Language="en-US" Publisher="kolbasik" />
+        <Identity Id="NuGetGraph.VisualStudio.41260d31-9b49-41cd-bf70-3c0099329555" Version="0.1.0" Language="en-US" Publisher="kolbasik" />
         <DisplayName>NuGetGraph.VisualStudio</DisplayName>
         <Description xml:space="preserve">NuGetGraph.VisualStudio VSIX Project to show the graph of NuGet dependencies.</Description>
         <MoreInfo>https://github.com/kolbasik/NuGetGraph/</MoreInfo>

@@ -3,10 +3,20 @@
 Alternative Tools:
 * https://github.com/brentkrueger/VisualStudio2015PackageVisualizer
 
+Useful Tools:
+* [ChrisLovett.DgmlPowerTools2017](https://marketplace.visualstudio.com/items?itemName=ChrisLovett.DgmlPowerTools2017)
+
 Useful links:
 * https://github.com/NuGet/Home
 * https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy
 * https://docs.microsoft.com/en-us/visualstudio/modeling/customize-code-maps-by-editing-the-dgml-files
+* https://cakebuild.net
+
+## Build
+
+```cmd
+PS> .\build.ps1
+```
 
 ## Command line interface
 
@@ -58,9 +68,11 @@ c:> NuGetGraph.CLI.exe graph "c:\code\src" -ec=".Test" -uv -us -ut -o=file -l
 
 ## Visual Studio 2017
 
-Visual Studio 2017 is supported right now, so you should clone this repository:
-* run the NuGetGraph.VisualStudio project
-* or build the solution and find the NuGetGraph.VisualStudio.vsix file
+Visual Studio 2017 is supported right now:
+
+* download the latest version from [releases](./releases)
+* or run the `.\build.ps1` script and after run the `.\artifacts\NuGetGraph.VisualStudio.vsix`
+* or open the solution and run the NuGetGraph.VisualStudio project
 
 TBD: https://marketplace.visualstudio.com/search?target=VS
 

@@ -56,13 +56,24 @@ Task("SemVer").Does(() => {
         UpdateAssemblyInfo = true,
         UpdateAssemblyInfoFilePath = src + File("CommonAssemblyInfo.cs")
     });
+    
     Information("GitVersion = {");
     Information("   FullSemVer: {0}", version.FullSemVer);
     Information("   LegacySemVer: {0}", version.LegacySemVer);
-    Information("   MajorMinorPatch: {0}", version.MajorMinorPatch);
+    Information("   NuGetVersionV2: {0}", version.NuGetVersionV2);
     Information("   InformationalVersion: {0}", version.InformationalVersion);
-    Information("   Nuget v2 version: {0}", version.NuGetVersionV2);
     Information("}");
+
+    // NOTE: update the vestion of Visual Studio Extension
+    foreach(var vsixmanifest in GetFiles(src.Path + "/**/*.vsixmanifest")) {
+        Information(vsixmanifest);
+        var settings = new XmlPokeSettings {
+            Namespaces = new Dictionary<string, string> {
+                { "ns", "http://schemas.microsoft.com/developer/vsx-schema/2011" }
+            }
+        };
+        XmlPoke(vsixmanifest, "/ns:PackageManifest/ns:Metadata/ns:Identity/@Version", version.NuGetVersionV2, settings);
+    }
 });
 
 Task("Build").Does(() => {
@@ -74,6 +85,8 @@ Task("Build").Does(() => {
             .SetMSBuildPlatform(MSBuildPlatform.x86)
             .SetPlatformTarget(PlatformTarget.MSIL));
     }
+
+    // NOTE: store the binaries of Visual Studio Extension 
     CopyFiles(GetFiles(src.Path + "/**/*.vsix"), dst);
 });
 
