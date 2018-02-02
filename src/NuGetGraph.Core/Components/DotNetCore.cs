@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using System.Xml.XPath;
 using NuGet;
 
 namespace NuGetGraph.Components
@@ -70,10 +69,12 @@ namespace NuGetGraph.Components
             {
                 var packages = new List<IPackage>();
                 var xDocument = XDocument.Load(Source);
-                foreach (var xElement in xDocument.XPathSelectElements("/Project/ItemGroup/PackageReference"))
+                var xPackageReference = xDocument.Descendants()
+                    .Where(x => string.Equals("PackageReference", x.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+                foreach (var xElement in xPackageReference)
                 {
-                    var packageId = xElement.Attribute("Include")?.Value;
-                    var packageVersion = new SemanticVersion(xElement.Attribute("Version")?.Value);
+                    var packageId = xElement.GetOptionalAttributeValue("Include") ?? xElement.GetOptionalElementValue("Include");
+                    var packageVersion = new SemanticVersion(xElement.GetOptionalAttributeValue("Version") ?? xElement.GetOptionalElementValue("Version"));
                     var package = FindPackage(packageId, packageVersion);
                     if (package != null)
                     {
