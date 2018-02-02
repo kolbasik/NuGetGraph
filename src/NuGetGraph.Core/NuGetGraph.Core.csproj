@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Components\Dgml.cs" />
     <Compile Include="Components\DgmlGraphUtils.cs" />
     <Compile Include="Components\DotNetCore.cs" />
