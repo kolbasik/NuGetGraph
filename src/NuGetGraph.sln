@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph.CLI", "NuGetGrap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph.Core", "NuGetGraph.Core\NuGetGraph.Core.csproj", "{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGraph.VisualStudio", "NuGetGraph.VisualStudio\NuGetGraph.VisualStudio.csproj", "{B849F217-9D09-4F00-9882-9BA82D7552F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFA1F1CC-0FE9-4F56-901D-CAB0F298169E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B849F217-9D09-4F00-9882-9BA82D7552F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B849F217-9D09-4F00-9882-9BA82D7552F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B849F217-9D09-4F00-9882-9BA82D7552F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B849F217-9D09-4F00-9882-9BA82D7552F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

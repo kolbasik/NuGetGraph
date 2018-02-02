@@ -58,7 +58,11 @@ c:> NuGetGraph.CLI.exe graph "c:\code\src" -ec=".Test" -uv -us -ut -o=file -l
 
 ## Visual Studio 2017
 
-TBD
+Visual Studio 2017 is supported right now, so you should clone this repository:
+* run the NuGetGraph.VisualStudio project
+* or build the solution and find the NuGetGraph.VisualStudio.vsix file
+
+TBD: https://marketplace.visualstudio.com/search?target=VS
 
 ## ReSharper
 
