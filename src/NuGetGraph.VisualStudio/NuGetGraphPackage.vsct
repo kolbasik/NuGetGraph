@@ -36,10 +36,22 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidNuGetGraphPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
       </Group>
+      <Group guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphSubMenuGroup" priority="0x0600">
+        <Parent guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphSubMenu"/>
+      </Group>
     </Groups>
+
+    <Menus>
+      <Menu guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphSubMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphMenuGroup"/>
+        <Strings>
+          <ButtonText>NuGet Graph</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
 
     <!--Buttons section. -->
     <!--This section defines the elements the user can interact with, like a menu command or a button
@@ -52,11 +64,18 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidNuGetGraphPackageCmdSet" id="cmdidNuGetGraphCommand" priority="0x0100" type="Button">
-        <Parent guid="guidNuGetGraphPackageCmdSet" id="MyMenuGroup" />
+      <Button guid="guidNuGetGraphPackageCmdSet" id="cmdidNuGetGraphShowGraphCommand" priority="0x0100" type="Button">
+        <Parent guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphSubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Show the NuGet Graph</ButtonText>
+          <ButtonText>Show</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidNuGetGraphPackageCmdSet" id="cmdidNuGetGraphShowOptionsCommand" priority="0x0100" type="Button">
+        <Parent guid="guidNuGetGraphPackageCmdSet" id="NuGetGraphSubMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic2" />
+        <Strings>
+          <ButtonText>Options</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -78,8 +97,11 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidNuGetGraphPackageCmdSet" value="{7dcdc588-85f7-44ee-94d5-c6d65445f314}">
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="cmdidNuGetGraphCommand" value="4129" />
+      <IDSymbol name="NuGetGraphMenuGroup" value="0x1020" />
+      <IDSymbol name="NuGetGraphSubMenu" value="0x1021" />
+      <IDSymbol name="NuGetGraphSubMenuGroup" value="0x1022" />
+      <IDSymbol name="cmdidNuGetGraphShowGraphCommand" value="255" />
+      <IDSymbol name="cmdidNuGetGraphShowOptionsCommand" value="256" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{f7aa9f7b-f98c-4614-a23e-5f5b8bcc7732}">
