@@ -1,28 +1,39 @@
 # NuGet Graph
 
 Alternative Tools:
+
 * https://github.com/brentkrueger/VisualStudio2015PackageVisualizer
 
 Useful Tools:
+
 * [ChrisLovett.DgmlPowerTools2017](https://marketplace.visualstudio.com/items?itemName=ChrisLovett.DgmlPowerTools2017)
 
 Useful links:
+
 * https://github.com/NuGet/Home
 * https://stackoverflow.com/questions/6653715/view-nuget-package-dependency-hierarchy
 * https://docs.microsoft.com/en-us/visualstudio/modeling/customize-code-maps-by-editing-the-dgml-files
 * https://cakebuild.net
 
-## Build
+## CI/CD
 
-```cmd
+### Build
+
+```powershell
 PS> .\build.ps1
+```
+
+### Release
+
+```powershell
+PS> .\build.ps1 -Target Release -ScriptArgs @("-u=kolbasik","-p=$((New-Object PSCredential "user", $(Read-Host -Prompt "password" -AsSecureString)).GetNetworkCredential().Password)")
 ```
 
 ## Command line interface
 
 The `console` help:
 
-```
+```cmd
 c:>NuGetGraph.CLI.exe --help
 
 Usage: NuGetGraph.CLI.exe [options] [command]
@@ -37,7 +48,7 @@ Commands:
 
 The `graph` command help:
 
-```
+```cmd
 c:> NuGetGraph.CLI.exe graph --help
 
 Usage: NuGetGraph.CLI.exe graph [arguments] [options]
@@ -62,7 +73,7 @@ Options:
 
 Example:
 
-```
+```cmd
 c:> NuGetGraph.CLI.exe graph "c:\code\src" -ec=".Test" -uv -us -ut -o=file -l
 ```
 

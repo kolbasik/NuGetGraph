@@ -1,5 +1,6 @@
 #tool "nuget:?package=GitVersion.CommandLine"
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools"
+#tool "nuget:?package=gitreleasemanager"
 
 var src = Directory("./src");
 var dst = Directory("./artifacts");
@@ -64,6 +65,8 @@ Task("SemVer").Does(() => {
     Information("   InformationalVersion: {0}", version.InformationalVersion);
     Information("}");
 
+    System.IO.File.WriteAllText(dst.Path + "/VERSION", version.NuGetVersionV2);
+
     // NOTE: update the vestion of Visual Studio Extension
     foreach(var vsixmanifest in GetFiles(src.Path + "/**/*.vsixmanifest")) {
         Information(vsixmanifest);
@@ -85,12 +88,28 @@ Task("Build").Does(() => {
             .SetMSBuildPlatform(MSBuildPlatform.x86)
             .SetPlatformTarget(PlatformTarget.MSIL));
     }
+});
 
+Task("Artifacts").Does(() => {
     Information("copying the NuGetGraph.CLI to artifacts ...");
     Zip(src + Directory("./NuGetGraph.CLI/bin/Release"), dst + File("NuGetGraph.CLI.zip"));
-    
     Information("copying the NuGetGraph.VisualStudio extension to artifacts ...");
     CopyFiles(src + File("./NuGetGraph.VisualStudio/bin/Release/NuGetGraph.VisualStudio.vsix"), dst);
+});
+
+Task("Release").Does(() => {
+    var nickname = Argument<string>("u");
+    var password = Argument<string>("p");
+
+    var settings = new GitReleaseManagerCreateSettings {
+        Prerelease        = true,
+        Name              = "v" + System.IO.File.ReadAllText(dst.Path + "/VERSION"),
+        InputFilePath     = System.IO.Path.GetTempFileName(),
+        Assets            = "./artifacts/NuGetGraph.CLI.zip,./artifacts/NuGetGraph.VisualStudio.vsix",
+        TargetCommitish   = "master",
+        TargetDirectory   = "."
+    };
+    GitReleaseManagerCreate(nickname, password, "kolbasik", "NuGetGraph", settings);
 });
 
 Task("Default")
@@ -98,6 +117,7 @@ Task("Default")
   .IsDependentOn("Restore")
   .IsDependentOn("Inspect")
   .IsDependentOn("SemVer")
-  .IsDependentOn("Build");
+  .IsDependentOn("Build")
+  .IsDependentOn("Artifacts");
 
 RunTarget(Argument("target", "Default"));
