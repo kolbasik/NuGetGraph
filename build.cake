@@ -86,8 +86,11 @@ Task("Build").Does(() => {
             .SetPlatformTarget(PlatformTarget.MSIL));
     }
 
-    Zip(src + Directory("./NuGetGraph.CLI/bin/Release"), dst + File("NuGetGraph.CLI.zip")); // NOTE: store the binaries of CLI
-    CopyFiles(GetFiles(src.Path + "./NuGetGraph.VisualStudio/bin/Release/*.vsix"), dst); // NOTE: store the binaries of Visual Studio Extension 
+    Information("copying the NuGetGraph.CLI to artifacts ...");
+    Zip(src + Directory("./NuGetGraph.CLI/bin/Release"), dst + File("NuGetGraph.CLI.zip"));
+    
+    Information("copying the NuGetGraph.VisualStudio extension to artifacts ...");
+    CopyFiles(src + File("./NuGetGraph.VisualStudio/bin/Release/NuGetGraph.VisualStudio.vsix"), dst);
 });
 
 Task("Default")
